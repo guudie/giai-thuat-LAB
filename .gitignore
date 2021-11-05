@@ -1,4 +1,8 @@
 .vscode/
+.vs/
 
 # compiled binaries
 *.exe
+
+# obj files
+*.obj
