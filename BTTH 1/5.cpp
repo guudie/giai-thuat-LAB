@@ -23,6 +23,7 @@ void printVector(const vector<T>& _v){
         cout << a << " ";
 }
 
+// hàm đệ quy duyệt qua các chu trình hamilton của g xuất phát từ 1, lưu các đáp án tiềm năng vào results
 int tsm(int** const& g, int n, bool* v, int cur, int nodes, int* trace){
     if(nodes == n-1){
         if(g[cur][1] != -1){

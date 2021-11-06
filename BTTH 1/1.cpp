@@ -3,6 +3,8 @@
 #include <algorithm>
 using namespace std;
 
+
+// duyệt qua mảng, mỗi i, cho j chạy từ i tới cuối mảng, tính tổng và so sánh với kết quả trước đó
 double largestSum(double* const& arr, int n, int& start, int& end){
     double ans = 0;
     start = end = -1;

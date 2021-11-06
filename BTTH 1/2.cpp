@@ -18,8 +18,8 @@ T vectorSum(vector<T> v){
 
 // giải thuật quay lui tìm số lượng xu nhỏ nhất đổi ra lượng 'remaining'
 int minExchange(int* const& coins, int cur, int* cnt, int n, int remaining){
-    if(remaining == 0){                                 // nếu lượng còn lại = 0
-        vector<int> currentResult;                      // thêm vào tập các đáp án
+    if(remaining == 0){                                 // nếu lượng còn lại = 0 thì lưu vào tập các đáp án tiềm năng
+        vector<int> currentResult;
         for(int i = 0; i < n; i++)
             currentResult.push_back(cnt[i]);
         results.push_back(currentResult);

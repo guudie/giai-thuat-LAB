@@ -5,6 +5,7 @@
 #include <fstream>
 using namespace std;
 
+// sinh dãy n bit, tính tổng và in ra tập con có tổng bằng k
 bool subsetSum(int* const& arr, int n, int pos, bool* chosen, int k){
     if(k == 0){
         for(int i = 0; i < n; i++)

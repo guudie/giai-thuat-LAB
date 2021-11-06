@@ -71,10 +71,10 @@ void printVector(const vector<T>& _v){
 }
 
 // hàm tìm convex hull
-// có thể thấy điểm trái nhất và phải nhất thuộc đa giác
-// hàm xây dựng đa giác bắt đầu từ điểm bên trái, xây dựng các điểm bên dưới rồi các điểm phía trên
-// các điểm cực này (extreme points); có thể thấy là 2 cạnh bất kì kề nhau thì cạnh trái có độ dốc (tan)
-// bé hơn cạnh bên phải đối với cung dưới, cung trên thì ngược lại
+// có thể thấy điểm trái nhất và phải nhất thuộc đa giác - điểm cực (extreme points)
+// hàm xây dựng đa giác bắt đầu từ điểm bên trái, xây dựng các điểm bên dưới các điểm cực rồi các điểm phía trên
+// các điểm cực này; có thể thấy là 2 cạnh bất kì kề nhau (cung dưới cực) thì cạnh trái có độ dốc (tan)
+// bé hơn cạnh bên phải, cung trên thì ngược lại
 void constructHull(vector<point>& pts){
     sort(pts.begin(), pts.end());
     int size = pts.size();
