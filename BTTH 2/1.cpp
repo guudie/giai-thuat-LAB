@@ -30,7 +30,7 @@ bool possible(int* const& pos, int row, int col, int n) {
 
 // tìm cách đặt các quân hậu
 void queens(int row, int* const& pos, int n, int& ans, stringstream& ss) {    // pos[i]: vị trí của 1 quân hậu trên dòng i
-    // nếu rơ ra ngoài phạm vi (cách đặt phù hợp) thì tăng kết quả lên 1 và lưu đáp án
+    // nếu ra ra ngoài phạm vi (cách đặt phù hợp) thì tăng kết quả lên 1 và lưu đáp án
     if (row == n) {
         ans++;
         printPos(pos, n, ss);
