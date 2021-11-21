@@ -3,7 +3,7 @@
 #include <sstream>
 using namespace std;
 
-// in vị trí của các quân hậu trên các dòng [1..n]
+// in vị trí của các quân hậu trên các dòng [1..n] vào stringstream
 void printPos(int* const& pos, int n, stringstream& ss) {
     for(int i = 0; i < n; i++)
         ss << pos[i] + 1 << " ";
@@ -28,7 +28,9 @@ bool possible(int* const& pos, int row, int col, int n) {
     return true;
 }
 
+// tìm cách đặt các quân hậu
 void queens(int row, int* const& pos, int n, int& ans, stringstream& ss) {    // pos[i]: vị trí của 1 quân hậu trên dòng i
+    // nếu rơ ra ngoài phạm vi (cách đặt phù hợp) thì tăng kết quả lên 1 và lưu đáp án
     if (row == n) {
         ans++;
         printPos(pos, n, ss);
