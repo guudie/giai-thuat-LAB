@@ -21,6 +21,7 @@ void printVector(const vector<ii>& v) {
 }
 
 int tsm(vector<ii>* const& g, int n, int cur, int nodes, bool* visited, ii* trace) {
+    // nếu đã đi hết thì lưu lại kết quả tiềm năng, cùng với khoảng cách của nó
     if(nodes == n-1) {
         int i = 0;
         for(; i < g[cur].size(); i++)
@@ -41,10 +42,12 @@ int tsm(vector<ii>* const& g, int n, int cur, int nodes, bool* visited, ii* trac
             results.push_back(currentResult);
             return g[cur][i].second;
         }
+        // nếu không tồn tại đường đi từ cur -> 1 thì trả về inf
         else
             return inf;
     }
 
+    // lặp qua các điểm có thể tới từ cur và gọi đệ quy
     visited[cur] = true;
     int ans = inf;
     for(auto a : g[cur]) {
