@@ -2,18 +2,17 @@
 #include <fstream>
 using namespace std;
 
+// struct chứa 3 số nguyên (tổng, bắt đầu, kết thúc)
 struct triplet {
     int a, b, c;
-    friend ostream& operator<<(ostream& os, const triplet& other) {
-        os << other.a << " " << other.b << " " << other.c;
-        return os;
-    }
 };
 
+// giải thuật chia để trị tính tổng dãy con liên tục lớn nhất từ l -> r, trả về: { tổng, start, end }
 triplet largestSum(int* const& arr, int l, int r) {
-    if(l==r)
+    if(l==r)                                        // nếu l = r thì dãy con tổng lớn nhất trong l->r là l
         return { arr[l], l, r };
     
+    // tính tổng lớn nhất của 2 bên
     int m = (l+r)/2;
     triplet maxL = largestSum(arr, l, m);
     triplet maxR = largestSum(arr, m+1, r);
@@ -21,6 +20,8 @@ triplet largestSum(int* const& arr, int l, int r) {
     if(maxL.a < 0)  maxL = {0, -1, -1};
     if(maxR.a < 0)  maxR = {0, -1, -1};
     
+    // tính tổng lớn nhất ở giữa l->r
+    /////////////////////////////////////
     triplet curMaxL = {0, -1, m};
     int tmp = 0;
     for(int i = m; i >= l; i--) {
@@ -40,7 +41,9 @@ triplet largestSum(int* const& arr, int l, int r) {
             curMaxR.c = i;
         }
     }
+    /////////////////////////////////////
 
+    // so sánh các kết quả và chọn ra kết quả tối ưu nhất
     triplet ans({0, -1, -1});
     if(ans.a < maxL.a)                  ans = maxL;
     if(ans.a < maxR.a)                  ans = maxR;
