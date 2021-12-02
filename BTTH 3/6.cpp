@@ -13,6 +13,8 @@ int coinsExchange(const vector<int>& arr, int remaining) {
     int ans = remaining;
     int tmp;
     for(auto a : arr) {
+        if(a == 1)
+            continue;
         if(remaining >= a) {
             tmp = 1 + coinsExchange(arr, remaining - a);
             ans = min(ans, tmp);
