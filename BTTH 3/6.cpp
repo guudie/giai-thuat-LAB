@@ -5,7 +5,7 @@
 #define inf (int)1e9
 using namespace std;
 
-// giải thuật chia để trị đổi n xu (rất chậm khi n lớn)
+// giải thuật chia để trị đổi n xu (remaining, rất chậm khi n lớn và mệnh giá xu nhỏ)
 int coinsExchange(const vector<int>& arr, int remaining) {
     if(remaining == 0)
         return 0;
@@ -28,9 +28,9 @@ void printAnswer(const vector<int>& arr, int* const& trace) {
         cout << arr[i] << ": " << trace[i] << "\n";
 }
 
-// tìm đáp án với số lượng xu: coins; và số tiền: k
-bool findAnswer(const vector<int>& arr, int* trace, int cur, int k, int coins) {
-    if(k == 0 && coins == 0) {
+// tìm đáp án với số lượng xu: coins; và số tiền: remaining
+bool findAnswer(const vector<int>& arr, int* trace, int cur, int remaining, int coins) {
+    if(remaining == 0 && coins == 0) {
         printAnswer(arr, trace);
         return true;
     }
@@ -39,10 +39,10 @@ bool findAnswer(const vector<int>& arr, int* trace, int cur, int k, int coins) {
         return false;
 
     for(int i = 0; i <= coins; i++) {
-        if(arr[cur]*i > k)
+        if(arr[cur]*i > remaining)
             continue;
         trace[cur] = i;
-        if(findAnswer(arr, trace, cur+1, k - arr[cur]*i, coins-i))
+        if(findAnswer(arr, trace, cur+1, remaining - arr[cur]*i, coins-i))
             return true;
     }
     trace[cur] = 0;
@@ -51,7 +51,7 @@ bool findAnswer(const vector<int>& arr, int* trace, int cur, int k, int coins) {
 
 int main() {
     fstream fin("input_6.txt", ios::in);
-    int a, k;
+    int a, n;
     vector<int> arr;
     fin >> a;
     arr.push_back(a);
@@ -61,8 +61,8 @@ int main() {
     }
     int* trace = new int[arr.size()];
     
-    fin >> k;
+    fin >> n;
 
-    int ans = coinsExchange(arr, k);
-    findAnswer(arr, trace, 0, k, ans);
+    int ans = coinsExchange(arr, n);
+    findAnswer(arr, trace, 0, n, ans);
 }
