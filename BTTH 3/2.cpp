@@ -5,6 +5,7 @@
 #include <math.h>
 using namespace std;
 
+// copy n dòng và n cột từ ma trận a bắt đầu từ dòng row và cột col
 int** matCopy(int** a, int n, int row, int col) {
     int** c = new int*[n];
     for(int i = 0; i < n; i++) {
@@ -16,6 +17,7 @@ int** matCopy(int** a, int n, int row, int col) {
     return c;
 }
 
+// cộng 2 ma trận, trả về con trỏ vào ma trận tổng
 int** matAdd(int** a, int** b, int n, int sign = 1) {
     int** c = new int*[n];
     for(int i = 0; i < n; i++) {
@@ -27,12 +29,14 @@ int** matAdd(int** a, int** b, int n, int sign = 1) {
     return c;
 }
 
+// cộng 2 ma trận, lưu vào c
 void matAdd(int** a, int** b, int** c, int n, int sign = 1) {
     for(int i = 0; i < n; i++)
         for(int j = 0; j < n; j++)
             c[i][j] = a[i][j] + sign*b[i][j];
 }
 
+// nhân 2 ma trận khi n đủ nhỏ
 void matMul(int** a, int** b, int** c, int n) {
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < n; j++) {
@@ -43,6 +47,7 @@ void matMul(int** a, int** b, int** c, int n) {
     }
 }
 
+// gộp 4 ma trận vào 1 ma trận
 void join(int** c11, int** c12, int** c21, int** c22, int** c, int n) {
     for(int i = 0; i < n/2; i++)
         for(int j = 0; j < n/2; j++) {
@@ -53,8 +58,9 @@ void join(int** c11, int** c12, int** c21, int** c22, int** c, int n) {
         }
 }
 
+// thuật toán Strassen
 void strassen(int** a, int** b, int** c, int n) {
-    if(n <= 2)
+    if(n <= 2)                  // nếu n đủ nhỏ thì nhân bình thường
         matMul(a, b, c, n);
     else {
         // khai báo các ma trận cần thiết cho tính toán
@@ -70,6 +76,7 @@ void strassen(int** a, int** b, int** c, int n) {
         int** b21 = matCopy(b, n/2, n/2, 0);                        
         int** b22 = matCopy(b, n/2, n/2, n/2);                      
 
+        // tính các ma trận cần thiết
         int** a11_22 = matAdd(a11, a22, n/2);               // a11 + a22
         int** a21_22 = matAdd(a21, a22, n/2);               // a21 + a22
         int** a11_12 = matAdd(a11, a12, n/2);               // a11 + a12
@@ -82,6 +89,7 @@ void strassen(int** a, int** b, int** c, int n) {
         int** b21_11 = matAdd(b21, b11, n/2, -1);           // b21 - b11
         int** b12_22 = matAdd(b12, b22, n/2, -1);           // b12 - b22
 
+        // khai báo m_i
         int** m1 = new int*[n/2];
         int** m2 = new int*[n/2];
         int** m3 = new int*[n/2];
@@ -108,6 +116,7 @@ void strassen(int** a, int** b, int** c, int n) {
         strassen(a21_11, b11_12, m6, n/2);
         strassen(a12_22, b21_22, m7, n/2);
 
+        // khai báo c_ij
         int** c11 = new int*[n/2];                  
         int** c12 = new int*[n/2];                  
         int** c21 = new int*[n/2];                  
@@ -124,6 +133,8 @@ void strassen(int** a, int** b, int** c, int n) {
         matAdd(m3, m5, c12, n/2);       // c12 = m3 + m5
         matAdd(m2, m4, c21, n/2);       // c21 = m2 + m4
         matAdd(m1, m3, c22, n/2);  matAdd(c22, m2, c22, n/2, -1);  matAdd(c22, m6, c22, n/2);       // c22 = m1 + m3 - m2 + m6
+
+        // gộp c11, c12, c21, c22 vào c
         join(c11, c12, c21, c22, c, n);
 
 

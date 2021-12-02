@@ -22,13 +22,31 @@ int coinsExchange(const vector<int>& arr, int remaining) {
     return ans;
 }
 
-int coinsExchange(const vector<int>& arr, int cur, int remaining) {
-    if(cur == -1 || remaining < 0)
-        return inf;
-    if(remaining == 0)
-        return 0;
-    
-    return min(coinsExchange(arr, cur - 1, remaining), coinsExchange(arr, cur, remaining - arr[cur]) + 1);
+// in đáp án
+void printAnswer(const vector<int>& arr, int* const& trace) {
+    for(int i = 0; i < arr.size(); i++)
+        cout << arr[i] << ": " << trace[i] << "\n";
+}
+
+// tìm đáp án với số lượng xu: coins; và số tiền: k
+bool findAnswer(const vector<int>& arr, int* trace, int cur, int k, int coins) {
+    if(k == 0 && coins == 0) {
+        printAnswer(arr, trace);
+        return true;
+    }
+
+    if(cur >= arr.size())
+        return false;
+
+    for(int i = 0; i <= coins; i++) {
+        if(arr[cur]*i > k)
+            continue;
+        trace[cur] = i;
+        if(findAnswer(arr, trace, cur+1, k - arr[cur]*i, coins-i))
+            return true;
+    }
+    trace[cur] = 0;
+    return false;
 }
 
 int main() {
@@ -41,8 +59,10 @@ int main() {
         fin >> a;
         arr.push_back(a);
     }
-
+    int* trace = new int[arr.size()];
+    
     fin >> k;
 
-    cout << coinsExchange(arr, arr.size()-1, k);
+    int ans = coinsExchange(arr, k);
+    findAnswer(arr, trace, 0, k, ans);
 }
