@@ -48,7 +48,7 @@ struct coord {
         return *this;
     }
 
-    coord operator-(const coord& other) {
+    coord operator-(const coord& other) const {
         coord tmp(x-other.x, y-other.y);
         return tmp;
     }
@@ -65,32 +65,64 @@ struct coord {
     }
 };
 
-/*                                                                                      o
-    thuật toán quick hull                                                             o    o
-    chú ý: hàm chỉ xét các điểm nằm ở phía bên trái của vector AB (điểm o):      A -----------> B
-                                                                                    x  x 
-                                                                                       x   x
-*/
+// struct để sort theo ngược chiều kim đồng hồ
+struct comp {
+    static coord rel;       // mốc so sánh
+
+    static void setRel(const coord& c) {
+        rel = c;
+    }
+
+    // hàm để so sánh với mốc
+    static bool relComp(const coord& a, const coord& b) {
+        coord va = a - rel;
+        coord vb = b - rel;
+        double cross_ab = va.crossLen(vb);
+        if(a.y > rel.y && b.y > rel.y) {
+            if(cross_ab == 0) 
+                return va.len() > vb.len();
+            return cross_ab > 0;
+        }
+        else if(a.y <= rel.y && b.y <= rel.y) {
+            if(cross_ab == 0)
+                return va.len() < vb.len();
+            return cross_ab > 0;
+        }
+        else
+            return a.y < b.y;
+    }
+};
+
+//                                                                                            o
+//  thuật toán quick hull                                                                   o    o
+//  chú ý: + hàm chỉ xét các điểm nằm ở phía bên trái của vector AB (các điểm o):      A -----------> B
+//                                                                                        x  x 
+//                                                                                           x   x
+//
+//         + output sẽ bỏ qua các điểm nằm trên cạnh nối 2 đỉnh của đa giác mà không phải đỉnh của đa giác
 void convex_hull(const vector<coord>& S, vector<coord>& H, coord A, coord B) {
     if(S.size() == 0)       // nếu không còn điểm để xét
         return;
 
     coord AB = B - A;       // vector AB
     coord P = S[0];
-    double pDist = abs((P-A).crossLen(AB))/AB.len();
+    double pDist = abs((P-A).crossLen(AB))/AB.len();    // khoảng cách từ P đến AB
 
     // tìm điểm cực P
     for(auto t : S) {
-        double cross = (t-A).crossLen(AB);
+        double cross = (t-A).crossLen(AB);              // tích có hướng của At và AB
         if(cross >= 0)
             continue;
         
-        double d = -cross/AB.len();
+        double d = -cross/AB.len();                     // khoảng cách từ t đến AB
         if(d > pDist) {
             pDist = d;
             P = t;
         }
     }
+
+    if(pDist == 0)
+        return;
     
     H.push_back(P);
     coord BP = P - B;
@@ -113,6 +145,7 @@ void convex_hull(const vector<coord>& S, vector<coord>& H, coord A, coord B) {
     convex_hull(outerPA, H, A, P);
 }
 
+// bước 1 của thuật toán
 vector<coord> find_hull(vector<coord>& S) {
     if(S.size() < 3)                    // nếu không đủ điểm thì không xét
         return vector<coord>(0);
@@ -125,9 +158,12 @@ vector<coord> find_hull(vector<coord>& S) {
 
     convex_hull(S, H, H[0], H[1]);      // xây dựng đa giác với các điểm bên trái (A, B)
     convex_hull(S, H, H[1], H[0]);      // xây dựng đa giác với các điểm bên trái (B, A)
+    comp::setRel(H[0]);
+    sort(H.begin(), H.end(), comp::relComp);    // sắp xếp theo ngược chiều kim đồng hồ
     return H;
 }
 
+coord comp::rel;
 int main() {
     fstream fin("input_5.txt", ios::in);
     int n;
@@ -139,5 +175,9 @@ int main() {
         S.push_back({x, y});
     }
 
-    printVector(find_hull(S));
+    vector<coord> H = find_hull(S);
+    if(H.size() < 3)
+        cout << "Khong co da giac bao tron cac diem";
+    else
+        printVector(H);
 }
