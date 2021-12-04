@@ -39,10 +39,7 @@ int main() {
     fin >> n;
 
     vector<int>* graph = new vector<int>[n+1];
-    int* inDeg = new int[n+1];
-
-    for(int i = 0; i <= n; i++) 
-        inDeg[i] = 0;
+    int* inDeg = new int[n+1]();
 
     int vertex;
     fin >> vertex;
