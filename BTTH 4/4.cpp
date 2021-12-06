@@ -3,6 +3,7 @@
 #include <algorithm>
 using namespace std;
 
+// thuật toán tìm kiếm nội suy
 int interpolSearch(double* arr, int l, int r, double val) {
     if(l>r)
         return -1;

@@ -3,8 +3,12 @@
 #include <algorithm>
 using namespace std;
 
+// thuật toán partition, phân hoạch các số nhỏ hơn arr[pivot] bên trái, lơn hơn hoặc bằng arr[pivot] bên phải
 int partition(double* arr, int l, int r) {
     int j = l-1;
+    int pivot = l + rand()%(r - l + 1);
+    swap(arr[pivot], arr[r]);
+
     for(int i = l; i < r; i++) {
         if(arr[i] < arr[r]) {
             j++;
@@ -16,6 +20,7 @@ int partition(double* arr, int l, int r) {
     return j;
 }
 
+// thuật toán chọn số nhỏ thứ k
 double kthSelection(double* arr, int n, int k) {
     k--;
     int l = 0;

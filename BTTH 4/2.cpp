@@ -10,6 +10,7 @@ struct node {
     node(int _dat) : data(_dat) {}
 };
 
+// bài toán Josephus, dùng linked list vòng
 void printJosephus(int n) {
     node* iter = new node(1);
     node* start = iter;
@@ -27,22 +28,7 @@ void printJosephus(int n) {
         iter = iter->next;
         delete tmp;
     }
-    cout << "\n" << iter->data;    
-
-    // vector<int> j;
-    // for(int i = 1; i <= n; i++)
-    //     j.push_back(i);
-    
-    // int i = 0;
-    // while(j.size() > 1) {
-    //     int nxt = (i+1)%j.size();
-    //     cout << j[nxt] << " ";
-    //     j.erase(j.begin()+nxt);
-    //     if(nxt < i)
-    //         i--;
-    //     i = (i+1)%j.size();
-    // }
-    // cout << "\n" << j[0];
+    cout << "\n" << iter->data;
 }
 
 int main() {

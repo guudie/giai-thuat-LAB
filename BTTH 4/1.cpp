@@ -10,7 +10,7 @@ void topSort(vector<int>* graph, int* inDeg, int n) {
     queue<int> q;
     for(int i = 1; i <= n; i++)
         if(inDeg[i] == 0)
-            q.push(i);
+            q.push(i);                  // thêm các đỉnh bậc vào = 0
     
     stringstream ss;
     
@@ -20,8 +20,8 @@ void topSort(vector<int>* graph, int* inDeg, int n) {
 
         ss << vert << " ";
         for(auto a : graph[vert])
-            if(--inDeg[a] == 0)
-                q.push(a);
+            if(--inDeg[a] == 0)         // cập nhật lại đỉnh mà vert có thể tới, thêm vào
+                q.push(a);              // hàng đợi nếu đỉnh đó có bậc vào = 0
     }
 
     for(int i = 1; i <= n; i++)
