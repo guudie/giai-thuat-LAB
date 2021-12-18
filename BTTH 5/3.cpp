@@ -3,6 +3,7 @@
 #include <algorithm>
 using namespace std;
 
+// truy vết tìm dãy con chung dài nhất
 void trace(string str1, string str2, int** dp) {
     int n = str1.length();
     int m = str2.length();
@@ -26,6 +27,10 @@ void trace(string str1, string str2, int** dp) {
     cout << res;
 }
 
+// dp[i][j] là độ dài dãy con chung dài nhất khi xét tới ký tự thứ i (bắt đầu từ 1) của str1, ký tự thứ j (bắt đầu từ 1) của str2
+// tại vị trí (i, j), một là độ dài dãy con dài nhất nằm ở vị trí (i-1, j)
+//                    hai là nằm ở vị trí (i, j-1)
+//                    nếu str1[i-1] == str2[j-1] thì cũng có thể nằm ở vị trí (i-1, j-1) và thêm 1
 void LCS(string str1, string str2) {
     int n = str1.length();
     int m = str2.length();
@@ -51,7 +56,6 @@ int main() {
     fstream fin("input_3.txt", ios::in);
     string str1, str2;
     fin >> str1 >> str2;
-
 
     LCS(str1, str2);
 }
