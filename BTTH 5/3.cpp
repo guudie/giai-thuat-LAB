@@ -31,6 +31,7 @@ void trace(string str1, string str2, int** dp) {
 // tại vị trí (i, j), một là độ dài dãy con dài nhất nằm ở vị trí (i-1, j)
 //                    hai là nằm ở vị trí (i, j-1)
 //                    nếu str1[i-1] == str2[j-1] thì cũng có thể nằm ở vị trí (i-1, j-1) và thêm 1
+// lưu ý: string str1 và str2 bắt đầu từ index 0
 void LCS(string str1, string str2) {
     int n = str1.length();
     int m = str2.length();
@@ -49,7 +50,10 @@ void LCS(string str1, string str2) {
         }
     }
 
-    trace(str1, str2, dp);
+    if(!dp[n][m])
+        cout << "Khong co day con chung!";
+    else
+        trace(str1, str2, dp);
 }
 
 int main() {

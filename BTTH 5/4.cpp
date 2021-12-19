@@ -3,6 +3,7 @@
 #include <algorithm>
 using namespace std;
 
+// truy vết dãy con tăng dài nhất
 void traceLIS(int* const& arr, int* const& trace, int i) {
     if(trace[i] == i) {
         cout << arr[i] << " ";
@@ -12,6 +13,8 @@ void traceLIS(int* const& arr, int* const& trace, int i) {
     cout << arr[i] << " ";
 }
 
+// dp[i] chứa dãy con tăng dài nhất kết thúc tại arr[i]
+// duyệt từ i-1 về 0, nếu arr[i] > arr[j] thì dp[i] = max(dp[i], dp[j] + 1)
 void LIS(int* const& arr, int n) {
     int* dp = new int[n];
     int* trace = new int[n];

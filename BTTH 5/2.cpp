@@ -30,6 +30,7 @@ void trace(const vector<int>& coins, int** dp, int money) {
 // dp[i][j] là lượng xu nhỏ nhất đổi được khi xét đến xu thứ i (bắt đầu từ 1), lượng tiền j
 // lượng xu mỗi mệnh giá không giới hạn nên một là không chọn:                     -->  dp[i-1][j];
 //                                          hai là chọn thêm 1 xu cùng mệnh giá:   -->  dp[i-1][j-coins[i-1]] + 1
+// lưu ý: mảng coins bắt đầu từ index 0
 void coinChange(const vector<int>& coins, int money) {
     int n = coins.size();
     int** dp = new int*[n+1];
