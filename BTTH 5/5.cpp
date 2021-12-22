@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-typedef pair<int, double> kp;
+typedef pair<int, double> kp;       // {key, xác suất}
 
 void optimalBST(kp* key_prob, int n) {
     double* pSum = new double[n];
